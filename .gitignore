@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables (Secrets)
+.env
+
+# Mac system files
+.DS_Store
+
+# React/Build outputs (if you have a frontend build)
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
