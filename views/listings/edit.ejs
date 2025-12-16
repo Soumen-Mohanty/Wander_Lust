@@ -1,17 +1,35 @@
 <%- layout("/layouts/boilerplate.ejs") %>
-<h1>EDIT LISTING</h1>
+<div class="row justify-content-center">
+    <div class="col col-8">
+        <h1>EDIT LISTING</h1>
 <form action="/listings/edit/<%=data._id%>?_method=PUT" method="post">
-    <h3>Title</h3>
-    <input type="text" name="title" value="<%=data.title%>"> <br>
-    <h3>Description</h3>
-    <textarea name="description"><%=data.description%></textarea> <br>
-    <h3>Image</h3>
-    <input type="text" name="img" value="<%=data.image%>"> <br>
-    <h3>Price</h3>
-    <input type="number" name="price" value="<%=data.price%>"> <br>
-    <h3>Location</h3>
-    <input type="text" name="location" value="<%=data.location%>"> <br>
-    <h3>Country</h3>
-    <input type="text" name="country" value="<%=data.country%>"> <br>
-    <button>Edit</button>
+  <div class="mt-3">
+    <label for="_title" class="form-label"><b>Title</b></label>
+    <input type="text" name="title" value="<%=data.title%>" id="_title" class="form-control" /> 
+  </div>
+  <div class="mt-3">
+    <label for="_description" class="form-label"><b>Description</b></label>
+    <textarea name="description" id="_description" class="form-control"><%=data.description%></textarea> 
+  </div>
+  <div class="mt-3">
+    <label for="_image" class="form-label"><b>Image</b></label>
+    <input type="text" name="img" value="<%=data.image%>" id="_image" class="form-control" /> 
+  </div>
+  <div class="row row-cols-md=2 row-cols-sm-1">
+    <div class="mt-3">
+    <label for="_price" class="form-label"><b>Price</b></label>
+    <input type="number" name="price" value="<%=data.price%>" id="_price" class="form-control" /> 
+  </div>
+  <div class="mt-3">
+    <label for="_location" class="form-label"><b>Location</b></label>
+    <input type="text" name="location" value="<%=data.location%>" id="_location" class="form-control" /> 
+  </div>
+  </div>
+  <div class="mt-3">
+    <label for="country" class="form-label"><b>Country</b></label>
+    <input type="text" name="country" value="<%=data.country%>" id="_country" class="form-control" /> 
+  </div>
+  <button class="btn mt-3 btn-edit">Edit</button>
 </form>
+    </div>
+</div>

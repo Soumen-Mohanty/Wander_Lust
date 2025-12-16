@@ -1,15 +1,29 @@
 <%- layout("/layouts/boilerplate.ejs") %>
-<h3>Listing Detail</h3>
-<ul>
-    <li><%=data.title%></li>
-    <li><%=data.description%></li>
-    <li>&#8377; <%=data.price.toLocaleString("en-IN")%></li> 
-    <li><%=data.location%></li>
-    <li><%=data.country%></li>
-</ul>
-<form action="/listings/edit/<%=data._id%>" method="get">
-    <button>Edit</button>
-</form>
-<form action="/listings/delete/<%=data._id%>?_method=DELETE" method="post">
-    <button>Delete</button>
-</form>
+    <div class="list-detail">
+  <h3>Listing Detail</h3>
+
+  <div class="card detail-card">
+    <img src="<%=data.image%>" class="card-img-top" alt="Listing_Image" />
+    <div class="card-body">
+      <p class="card-text"><b><%=data.title%></b></p>
+      <p class="card-text"><%=data.description%></p>
+      <p class="card-text">&#8377; <%=data.price.toLocaleString("en-IN")%></p>
+      <p class="card-text"><%=data.location%></p>
+      <p class="card-text"><%=data.country%></p>
+    </div>
+    <div class="row row-cols-1 row-cols-lg-2 g-3">
+      <div class="col">
+          <form action="/listings/edit/<%=data._id%>" method="get">
+        <button class="btn btn-edit" style="width:100%;">Edit</button>
+      </form>
+      </div>
+      <div class="col">
+          <form action="/listings/delete/<%=data._id%>?_method=DELETE" method="post">
+        <button class="btn btn-delete w-100">Delete</button>
+      </form>
+      </div>
+  </div>
+    
+  </div>
+</div>
+

@@ -1,0 +1,125 @@
+.fix_nav {
+  position: sticky;
+  top: 0px;
+  background-color: whitesmoke;
+  height: 5rem;
+  z-index: 1000;
+}
+.fa-compass {
+  color: red;
+  font-size: 2.5rem;
+}
+.nav-link {
+  color: black;
+  font-weight: bold;
+}
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: whitesmoke;
+  padding: 10px 0;
+  margin-top: auto;
+}
+.socials {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.social-icons {
+  font-size: 2rem;
+}
+.tag {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.links {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.links a {
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+.links a:hover {
+  text-decoration: underline;
+}
+.card-img-top {
+  height: 20rem !important;
+  object-fit: cover !important;
+  width: 100%;
+}
+.btn-details {
+  margin-top: auto;
+}
+.card-all-listings:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+.card-all-listings {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 0px;
+  height: 100%;
+}
+.btn-create {
+  background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px; /* Sharper corners for a tech look */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-create:hover {
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(75, 108, 183, 0.6);
+}
+
+.btn-edit {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  color: #333;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+  background-color: #333;
+  border-color: #333;
+  color: white;
+  transform: scale(1.05);
+}
+.btn-delete {
+  background-color: #fff0f0; /* Very pale red background */
+  color: #d9534f;
+  border: 1px solid #f5c6cb;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 8px 16px;
+  transition: 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: #d9534f;
+  color: white;
+}
+.list-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+}
+.detail-card {
+  max-width: 45rem;
+  width: 100%;
+  border: none;
+}
