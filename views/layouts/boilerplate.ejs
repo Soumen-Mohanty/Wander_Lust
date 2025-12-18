@@ -20,12 +20,9 @@
     <link rel="stylesheet" href="/css/boilerplate_style.css" />
   </head>
   <body class="d-flex flex-column min-vh-100">
-    
-    <%- include("../includes/navbar.ejs") %> 
-    
-    <div class="container flex-grow-1">
-        <%- body -%> 
-    </div>
+    <%- include("../includes/navbar.ejs") %>
+
+    <div class="container flex-grow-1"><%- body -%></div>
 
     <%- include("../includes/footer.ejs") %>
 
@@ -34,5 +31,6 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+    <script src="/JS/boilerplate.js"></script>
   </body>
 </html>
