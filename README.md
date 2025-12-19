@@ -38,17 +38,18 @@
    ```bash
    node index.js
 5. **Visit The Browser**
-    Open http://localhost:3030
+   Open http://localhost:8080
+
 🗺️ Roadmap
 
-   . [x] Core Listing Engine (CRUD)
+   - [x] Core Listing Engine (CRUD)
 
-   . [x] Database Connection & Schema Design
+   - [x] Database Connection & Schema Design
 
-   . [ ] User Authentication (Passport.js)
+   - [ ] User Authentication (Passport.js)
 
-   . [ ] Reviews & Ratings System
+   - [ ] Reviews & Ratings System
 
-   . [ ] Map Integration
+   - [ ] Map Integration
    
    👤 Author:-Soumen Mohanty
