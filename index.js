@@ -4,10 +4,12 @@ const ejs = require("ejs");
 const methodOverride = require("method-override");
 const path = require("path");
 const Listing = require("./models/listings.js");
+const Review = require("./models/review_schema.js");
 const engine = require("ejs-mate");
 const ExpressError = require("./utilities/ExpressError.js");
 const wrapAsync = require("./utilities/wrapAsync.js");
 const listingSchema = require("./models/listing_validation_joi.js");
+const reviewSchema = require("./models/review_validation_joi.js");
 const app = express();
 app.engine("ejs", engine);
 app.set("view engine", "ejs");
@@ -29,6 +31,15 @@ const listingValidate = (req,res,next) =>
 {
   let validation_result = listingSchema.validate(req.body);
   if (validation_result.error)
+  {
+    let errMsg = validation_result.error.details.map((el)=>el.message).join(",");
+    throw new ExpressError(400,errMsg);
+  }
+  next();
+}
+const reviewValidate = (req,res,next) => {
+  let validation_result = reviewSchema.validate(req.body);
+  if(validation_result.error)
   {
     let errMsg = validation_result.error.details.map((el)=>el.message).join(",");
     throw new ExpressError(400,errMsg);
@@ -70,7 +81,7 @@ app.post(
 );
 
 app.get("/listings/:id", async (req, res) => {
-  data = await Listing.findById(req.params.id);
+  data = await Listing.findById(req.params.id).populate("reviews");
   res.render("listings/detail.ejs", { data });
 });
 app.get("/listings/edit/:id", async (req, res) => {
@@ -89,6 +100,22 @@ app.delete("/listings/delete/:id", async (req, res) => {
   await Listing.findByIdAndDelete(req.params.id);
   res.redirect("/listings");
 });
+app.post("/listings/review/:id",
+  reviewValidate,
+  wrapAsync(async (req,res) => {
+  const rev = new Review(req.body);
+  await rev.save();
+  const list = await Listing.findById(req.params.id);
+  list.reviews.push(rev);
+  await Listing.findByIdAndUpdate(req.params.id,list);
+  res.redirect(`/listings/${req.params.id}`);
+}))
+app.delete("/listings/delete_review/:listing_id/:review_id",wrapAsync(async(req,res)=>{
+  const {listing_id,review_id} = req.params;
+  await Listing.findByIdAndUpdate(listing_id,{$pull :{reviews : review_id}});
+  await Review.findByIdAndDelete(review_id);
+  res.redirect(`/listings/${listing_id}`);
+}))
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("listings/error.ejs", { message });

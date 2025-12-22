@@ -121,9 +121,16 @@
 .detail-card {
   max-width: 45rem;
   width: 100%;
-  border: none;
+  border : none;
 }
-.error-img
-{
-  height : 2rem;
+.error-img {
+  height: 2rem;
+}
+.card-line {
+  border: none;
+  border-top: 1px solid black; /* or #ccc for a lighter grey */
+  opacity: 1;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width : 50rem;
 }

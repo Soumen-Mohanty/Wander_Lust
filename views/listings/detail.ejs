@@ -1,29 +1,73 @@
 <%- layout("/layouts/boilerplate.ejs") %>
-    <div class="list-detail">
-  <h3>Listing Detail</h3>
+<div class="list-detail">
+  <div>
+    <h3><%=data.title%></h3>
 
-  <div class="card detail-card">
-    <img src="<%=data.image%>" class="card-img-top" alt="Listing_Image" />
-    <div class="card-body">
-      <p class="card-text"><b><%=data.title%></b></p>
-      <p class="card-text"><%=data.description%></p>
-      <p class="card-text">&#8377; <%=data.price.toLocaleString("en-IN")%></p>
-      <p class="card-text"><%=data.location%></p>
-      <p class="card-text"><%=data.country%></p>
-    </div>
-    <div class="row row-cols-1 row-cols-lg-2 g-3">
-      <div class="col">
+    <div class="card detail-card">
+      <img src="<%=data.image%>" class="card-img-top" alt="Listing_Image" />
+      <div class="card-body">
+        <p class="card-text"><%=data.description%></p>
+        <p class="card-text">&#8377; <%=data.price.toLocaleString("en-IN")%></p>
+        <p class="card-text"><%=data.location%></p>
+        <p class="card-text"><%=data.country%></p>
+      </div>
+      <div class="row row-cols-1 row-cols-lg-2 g-3">
+        <div class="col">
           <form action="/listings/edit/<%=data._id%>" method="get">
-        <button class="btn btn-edit" style="width:100%;">Edit</button>
-      </form>
+            <button class="btn btn-edit" style="width: 100%">Edit</button>
+          </form>
+        </div>
+        <div class="col">
+          <form
+            action="/listings/delete/<%=data._id%>?_method=DELETE"
+            method="post"
+          >
+            <button class="btn btn-delete w-100">Delete</button>
+          </form>
+        </div>
       </div>
-      <div class="col">
-          <form action="/listings/delete/<%=data._id%>?_method=DELETE" method="post">
-        <button class="btn btn-delete w-100">Delete</button>
+    </div>
+    <hr class="card-line" />
+    <div class="review-div">
+      <h2>Leave a Review</h2>
+      <form action="/listings/review/<%=data._id%>" method="post" novalidate class="needs-validation">
+        <div class="mb-3">
+          <label for="rating" class="form-label">Rating</label>
+          <input
+            type="range"
+            class="form-range"
+            id="rating"
+            min="1"
+            max="5"
+            step="1"
+            name="rating"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="comments" class="form-label">Comments</label>
+          <textarea name="comment" id="comments" class="form-control" rows="4" required></textarea>
+          <div class="invalid-feedback">Please provide your comments</div>
+        </div>
+        <button class="btn btn-outline-dark mb-3">Submit</button>
       </form>
-      </div>
-  </div>
-    
+    </div>
+    <hr class="card-line" />
+    <h2 class="mb-3">Reviews</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center">
+      <% for(let ele of data.reviews) { %>
+        <div class="col ">
+  <div class="card review-card">
+  <div class="card-body">
+    <h5 class="card-title">Alpha_Beta</h5>
+    <p class="card-text"><%=ele.comment%></p>
+    <p class="card-text">Rating: <%=ele.rating%>⭐️</p>
+    <form action="/listings/delete_review/<%=data._id%>/<%=ele._id%>?_method=DELETE" method="post">
+      <button class="btn btn-delete btn-sm">Delete Review</button>
+    </form>
   </div>
 </div>
-
+        </div>
+      <%}%>
+    </div>
+  </div>
+</div>
