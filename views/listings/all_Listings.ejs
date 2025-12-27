@@ -1,6 +1,10 @@
 <%- layout("/layouts/boilerplate.ejs") -%>
+    <% if(dne && dne.length) { %>
+      <%- include("../includes/lisiting_dne_flash.ejs") %>
+    <% } %>
+
 <h1>All Listings</h1>
-<div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
+<div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
   <%for(let ele of data){%>
   <div class="col">
     <div class="card border border-info border-2 card-all-listings">

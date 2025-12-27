@@ -22,6 +22,10 @@
   <body class="d-flex flex-column min-vh-100">
     <%- include("../includes/navbar.ejs") %>
 
+    <% if(success.length) { %>
+      <%- include("../includes/success_flash.ejs") %>
+    <% } %>
+
     <div class="container flex-grow-1"><%- body -%></div>
 
     <%- include("../includes/footer.ejs") %>

@@ -30,7 +30,12 @@
     <hr class="card-line" />
     <div class="review-div">
       <h2>Leave a Review</h2>
-      <form action="/listings/review/<%=data._id%>" method="post" novalidate class="needs-validation">
+      <form
+        action="/listings/review/<%=data._id%>"
+        method="post"
+        novalidate
+        class="needs-validation"
+      >
         <div class="mb-3">
           <label for="rating" class="form-label">Rating</label>
           <input
@@ -45,7 +50,13 @@
         </div>
         <div class="mb-3">
           <label for="comments" class="form-label">Comments</label>
-          <textarea name="comment" id="comments" class="form-control" rows="4" required></textarea>
+          <textarea
+            name="comment"
+            id="comments"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
           <div class="invalid-feedback">Please provide your comments</div>
         </div>
         <button class="btn btn-outline-dark mb-3">Submit</button>
@@ -53,20 +64,25 @@
     </div>
     <hr class="card-line" />
     <h2 class="mb-3">Reviews</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center">
+    <div
+      class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center"
+    >
       <% for(let ele of data.reviews) { %>
-        <div class="col ">
-  <div class="card review-card">
-  <div class="card-body">
-    <h5 class="card-title">Alpha_Beta</h5>
-    <p class="card-text"><%=ele.comment%></p>
-    <p class="card-text">Rating: <%=ele.rating%>⭐️</p>
-    <form action="/listings/delete_review/<%=data._id%>/<%=ele._id%>?_method=DELETE" method="post">
-      <button class="btn btn-delete btn-sm">Delete Review</button>
-    </form>
-  </div>
-</div>
+      <div class="col">
+        <div class="card review-card">
+          <div class="card-body">
+            <h5 class="card-title">Alpha_Beta</h5>
+            <p class="card-text"><%=ele.comment%></p>
+            <p class="card-text">Rating: <%=ele.rating%>⭐️</p>
+            <form
+              action="/listings/review/delete/<%=data._id%>/<%=ele._id%>?_method=DELETE"
+              method="post"
+            >
+              <button class="btn btn-delete btn-sm">Delete Review</button>
+            </form>
+          </div>
         </div>
+      </div>
       <%}%>
     </div>
   </div>
