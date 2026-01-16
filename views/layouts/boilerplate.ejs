@@ -25,6 +25,9 @@
     <% if(success.length) { %>
       <%- include("../includes/success_flash.ejs") %>
     <% } %>
+    <% if(error && error.length) { %>
+      <%- include("../includes/error_flash.ejs") %>
+    <% } %>
 
     <div class="container flex-grow-1"><%- body -%></div>
 

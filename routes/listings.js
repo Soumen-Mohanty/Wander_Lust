@@ -5,6 +5,7 @@ const Review = require("../models/review_schema.js");
 const wrapAsync = require("../utilities/wrapAsync.js");
 const listingSchema = require("../models/listing_validation_joi.js");
 const ExpressError = require("../utilities/ExpressError.js");
+const isLoggedIn = require("../middlewares.js");
 const listingValidate = (req,res,next) => 
 {
   let validation_result = listingSchema.validate(req.body);
@@ -17,15 +18,17 @@ const listingValidate = (req,res,next) =>
 }
 router.get("/", async (req, res) => {
   data = await Listing.find({});
+  req.session.hello = "world"
   res.render("listings/all_Listings.ejs", { data });
 });
 
-router.get("/new_listing", async (req, res) => {
+router.get("/new_listing", isLoggedIn, async (req, res) => {
   res.render("listings/new_listing.ejs");
 });
 
 router.post(
   "/new_listing",
+  isLoggedIn,
   listingValidate,
   wrapAsync(async (req, res) => {
     // if(!req.body.title) throw new ExpressError(400,"Title Not Found");
@@ -59,7 +62,7 @@ router.get("/:id", async (req, res) => {
   }
   else res.render("listings/detail.ejs", { data });
 });
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id",isLoggedIn, async (req, res) => {
   const data = await Listing.findById(req.params.id);
   if(!data)
   {
@@ -69,7 +72,7 @@ router.get("/edit/:id", async (req, res) => {
   }
   res.render("listings/edit.ejs", { data });
 });
-router.put("/edit/:id",
+router.put("/edit/:id",isLoggedIn,
   listingValidate,
   wrapAsync(async (req, res) => {
    await Listing.findByIdAndUpdate(req.params.id, req.body);
@@ -78,7 +81,7 @@ router.put("/edit/:id",
 })
 );
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id",isLoggedIn, async (req, res) => {
   await Listing.findByIdAndDelete(req.params.id);
   req.flash("success","Successfully Deleted A Listing!");
   res.redirect("/listings");
