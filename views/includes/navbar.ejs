@@ -14,9 +14,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link nav-item-enhanced" aria-current="page" href="/listings"><i class="fa-solid fa-home"></i> Home</a>
-        <a class="nav-link nav-item-enhanced" href="/listings"><i class="fa-solid fa-list"></i> All Listing</a>
-        <a class="nav-link nav-item-enhanced nav-item-create" href="/listings/new_listing"><i class="fa-solid fa-plus-circle"></i> Add New Listing</a>
+        <a
+          class="nav-link nav-item-enhanced"
+          aria-current="page"
+          href="/listings"
+          ><i class="fa-solid fa-home"></i> Home</a
+        >
+        <a class="nav-link nav-item-enhanced" href="/listings"
+          ><i class="fa-solid fa-list"></i> All Listing</a
+        >
+        <a
+          class="nav-link nav-item-enhanced nav-item-create"
+          href="/listings/new_listing"
+          ><i class="fa-solid fa-plus-circle"></i> Add New Listing</a
+        >
       </div>
       <div class="navbar-nav ms-auto">
         <div class="btn-group">
@@ -29,10 +40,19 @@
             Account
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
+            <% if(!currUser) { %>
             <li><a class="dropdown-item" href="/user/sign-up">Sign Up</a></li>
             <li><a class="dropdown-item" href="/user/login">Login</a></li>
+            <% } %> <% if(currUser) { %>
+            <li>
+              <a class="dropdown-item disabled" href="#"
+                >Logged in as <b><%= currUser.username %></b></a
+              >
+            </li>
+
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+            <% } %>
           </ul>
         </div>
       </div>

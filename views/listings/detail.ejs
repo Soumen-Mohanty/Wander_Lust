@@ -6,12 +6,16 @@
     <div class="card detail-card">
       <img src="<%=data.image%>" class="card-img-top" alt="Listing_Image" />
       <div class="card-body">
+        <p class="card-text">
+          <span class="Owner-tag">Owner</span>: <%=data.owner.username%>
+        </p>
         <p class="card-text"><%=data.description%></p>
         <p class="card-text">&#8377; <%=data.price.toLocaleString("en-IN")%></p>
         <p class="card-text"><%=data.location%></p>
         <p class="card-text"><%=data.country%></p>
       </div>
       <div class="row row-cols-1 row-cols-lg-2 g-3">
+        <% if(currUser && currUser.username === data.owner.username) { %>
         <div class="col">
           <form action="/listings/edit/<%=data._id%>" method="get">
             <button class="btn btn-edit" style="width: 100%">Edit</button>
@@ -25,9 +29,11 @@
             <button class="btn btn-delete w-100">Delete</button>
           </form>
         </div>
+        <% } %>
       </div>
     </div>
     <hr class="card-line" />
+    <% if(currUser) { %>
     <div class="review-div">
       <h2>Leave a Review</h2>
       <form
@@ -63,27 +69,52 @@
       </form>
     </div>
     <hr class="card-line" />
+    <% } %>
     <h2 class="mb-3">Reviews</h2>
-    <div
-      class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center"
-    >
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-3">
       <% for(let ele of data.reviews) { %>
       <div class="col">
-        <div class="card review-card">
+        <div class="card review-card h-100">
           <div class="card-body">
-            <h5 class="card-title">Alpha_Beta</h5>
-            <p class="card-text"><%=ele.comment%></p>
-            <p class="card-text">Rating: <%=ele.rating%>⭐️</p>
+            
+            <div class="review-header">
+              <div class="review-avatar">
+                <%= ele.writer.username.charAt(0) %>
+              </div>
+              
+              <div class="review-info">
+                <span class="review-author">@<%= ele.writer.username %></span>
+                
+                <div class="star-rating">
+                  <% for(let i=1; i<=5; i++) { %>
+                    <% if(i <= ele.rating) { %>
+                      <i class="fa-solid fa-star"></i> <% } else { %>
+                      <i class="fa-regular fa-star"></i> <% } %>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+
+            <p class="card-text review-comment">
+              "<%= ele.comment %>"
+            </p>
+
+            <% if(currUser && currUser.username === ele.writer.username) { %>
             <form
+              class="mt-auto"
               action="/listings/review/delete/<%=data._id%>/<%=ele._id%>?_method=DELETE"
               method="post"
             >
-              <button class="btn btn-delete btn-sm">Delete Review</button>
+              <button class="btn btn-dark btn-sm btn-delete-subtle">
+                <i class="fa-solid fa-trash-can"></i> Delete
+              </button>
             </form>
+            <% } %>
+
           </div>
         </div>
       </div>
-      <%}%>
+      <% } %>
     </div>
   </div>
 </div>

@@ -352,6 +352,7 @@ const data = [
 ];
 data.forEach((ele)=>{
     ele.image = ele.image.url;
+    ele.owner = new mongoose.Types.ObjectId("6969edebaa80b325e40e80bd");
 });
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");

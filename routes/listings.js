@@ -5,17 +5,7 @@ const Review = require("../models/review_schema.js");
 const wrapAsync = require("../utilities/wrapAsync.js");
 const listingSchema = require("../models/listing_validation_joi.js");
 const ExpressError = require("../utilities/ExpressError.js");
-const isLoggedIn = require("../middlewares.js");
-const listingValidate = (req,res,next) => 
-{
-  let validation_result = listingSchema.validate(req.body);
-  if (validation_result.error)
-  {
-    let errMsg = validation_result.error.details.map((el)=>el.message).join(",");
-    throw new ExpressError(400,errMsg);
-  }
-  next();
-}
+const {isLoggedIn,isOwner,listingValidate} = require("../middlewares.js");
 router.get("/", async (req, res) => {
   data = await Listing.find({});
   req.session.hello = "world"
@@ -45,6 +35,7 @@ router.post(
       price: req.body.price,
       location: req.body.location,
       country: req.body.country,
+      owner : req.user._id
     });
     await new_data.save();
     const data = await Listing.find();
@@ -54,7 +45,7 @@ router.post(
 );
 
 router.get("/:id", async (req, res) => {
-  data = await Listing.findById(req.params.id).populate("reviews");
+  data = await Listing.findById(req.params.id).populate({path : "reviews", populate : {path : "writer"}}).populate("owner");
   if(!data)
   {
     req.flash("dne","Listing Not Found!");
@@ -62,7 +53,7 @@ router.get("/:id", async (req, res) => {
   }
   else res.render("listings/detail.ejs", { data });
 });
-router.get("/edit/:id",isLoggedIn, async (req, res) => {
+router.get("/edit/:id",isLoggedIn,isOwner, async (req, res) => {
   const data = await Listing.findById(req.params.id);
   if(!data)
   {
@@ -72,16 +63,23 @@ router.get("/edit/:id",isLoggedIn, async (req, res) => {
   }
   res.render("listings/edit.ejs", { data });
 });
-router.put("/edit/:id",isLoggedIn,
+router.put("/edit/:id",isLoggedIn,isOwner,
   listingValidate,
   wrapAsync(async (req, res) => {
-   await Listing.findByIdAndUpdate(req.params.id, req.body);
+  const temp_data = await Listing.findById(req.params.id).populate("owner");
+  if(temp_data.owner.username !== req.user.username);
+  {
+    req.flash("error","You are not authorized to edit this listing!");
+    res.redirect("/listings");
+    return;
+  }
+  await Listing.findByIdAndUpdate(req.params.id, req.body);
   req.flash("success","Successfully Updated A Listing!");
   res.redirect("/listings");
 })
 );
 
-router.delete("/delete/:id",isLoggedIn, async (req, res) => {
+router.delete("/delete/:id",isLoggedIn,isOwner, async (req, res) => {
   await Listing.findByIdAndDelete(req.params.id);
   req.flash("success","Successfully Deleted A Listing!");
   res.redirect("/listings");
